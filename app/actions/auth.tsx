@@ -2,6 +2,7 @@
 
 import { z } from 'zod'
 import { redirect } from 'next/navigation'
+import { createSession } from '@/app/lib/session'
 
 const LoginFormSchema = z.object({
     email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
@@ -25,22 +26,30 @@ export async function login(state: FormState, formData: FormData) {
     
     if (!validatedFields.success) {
         return {
-          message: 'Your email address is invalid',
+          message: 'Your email address is improperly formatted',
         }
     }
-    
-    let loginSuccess: boolean = await setCookies(validatedFields.data.email, validatedFields.data.password);
-    if (!loginSuccess) {
+
+    let response = await setCookies(validatedFields.data.email, validatedFields.data.password);
+    if (!response.success) {
         return {
             data : {
                 email: validatedFields.data.email,
             },
-            message: 'Please check your login credentials and try again.',
+            message: response.message,
         }    
     }
     redirect('/profile')
 }
 
-async function setCookies(email: string, password: string) : Promise<boolean> {
-    return false;
+async function setCookies(email: string, password: string) {
+    const response = await fetch("https://api-dev.quicklyinc.com/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email: email, password: password }),
+    });
+    const jsonResponse = await response.json();
+    if (jsonResponse.success) {
+        await createSession(jsonResponse.token)
+    }
+    return jsonResponse;
 }
