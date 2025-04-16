@@ -35,6 +35,14 @@ a {
   text-decoration: none;
 }
 
+dt {
+  font-weight: bold;
+}
+
+dd {
+  padding-left: 3em;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

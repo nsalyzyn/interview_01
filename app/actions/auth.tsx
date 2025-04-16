@@ -36,7 +36,7 @@ export async function login(state: FormState, formData: FormData) {
         }
     }
 
-    let response = await setCookies(validatedFields.data.email, validatedFields.data.password);
+    const response = await setCookies(validatedFields.data.email, validatedFields.data.password);
     if (!response.success) {
         return {
             data : {

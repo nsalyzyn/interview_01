@@ -19,10 +19,22 @@ export default async function Home() {
 
   return (
     <div className={styles.page}>
-      <main>
-        TODO: Company info
-        TODO: Data section
-      </main>
+      <div>
+        <dl>
+          <dt>Name</dt>
+          <dd>{userData.user?.full_name}</dd>
+          <dt>Email</dt>
+          <dd>{userData.user?.email}</dd>
+          <dt>Company name</dt>
+          <dd>{userData.user?.Company?.name}</dd>
+          <dt>Expected activity</dt>
+          <dd>{userData.user?.Company?.expected_activity}</dd>
+        </dl>
+      </div>
+      <hr/>
+      <div>
+
+      </div>
     </div>
   );
 }
