@@ -13,3 +13,8 @@ export async function createSession(token: string) {
     path: '/',
   })
 }
+
+export async function getSessionToken() : Promise<string> {
+    const cookieStore = await cookies()
+    return cookieStore.get('token')?.value || ''
+}
