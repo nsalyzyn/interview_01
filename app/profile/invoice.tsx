@@ -1,6 +1,6 @@
 'use client';
 
-export function InvoiceComponent() {
+export function InvoiceCalculator() {
     return (
         <>
             <label>Invoice due date</label>
@@ -30,7 +30,7 @@ function updatePaymentDate() {
     const payDate = new Date(invoiceDate.valueOf())
     
     payDate.setDate(paycycleDate.getDate())
-    if (invoiceDate.getDay() > paycycleDate.getDay()) {
+    if (invoiceDate.getDate() > paycycleDate.getDate()) {
         payDate.setMonth(payDate.getMonth() + 1)
     }
 
