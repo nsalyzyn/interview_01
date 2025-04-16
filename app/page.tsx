@@ -13,10 +13,21 @@ export default function Home() {
         <div>
           <label htmlFor="email">Email</label>
           <input id="email" name="email" type="email" placeholder="Email" defaultValue={state?.data?.email} />
+          {state?.errors?.email && <p>{state.errors.email}</p>}
         </div>
         <div>
           <label htmlFor="password">Password</label>
           <input id="password" name="password" type="password" />
+          {state?.errors?.password && (
+            <div>
+              <p>Password must:</p>
+              <ul>
+                {state.errors.password.map((error) => (
+                  <li key={error}>- {error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
         <button type="submit" disabled={pending}>Login</button>
         {state?.message && (

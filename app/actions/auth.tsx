@@ -6,11 +6,15 @@ import { createSession } from '@/app/lib/session'
 
 const LoginFormSchema = z.object({
     email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
-    password: z.string().trim(),
+    password: z.string().min(8, { message: 'Be at least 8 characters long' }).trim(),
   })
    
 type FormState =
     | {
+        errors? : {
+            email? : string[],
+            password? : string[],
+        }
         data? : {
             email?: string,
         },
@@ -25,8 +29,10 @@ export async function login(state: FormState, formData: FormData) {
       })
     
     if (!validatedFields.success) {
-        return {
-          message: 'Your email address is improperly formatted',
+        if (!validatedFields.success) {
+            return {
+              errors: validatedFields.error.flatten().fieldErrors,
+            }
         }
     }
 
