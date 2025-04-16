@@ -1,6 +1,7 @@
 import styles from "/app/page.module.css";
 import { getUser } from '@/app/actions/auth'
 import { redirect } from 'next/navigation'
+import { InvoiceComponent } from './invoice'
 
 export default async function Home() {
   const userData = await getUser()
@@ -33,7 +34,7 @@ export default async function Home() {
       </div>
       <hr/>
       <div>
-
+        <InvoiceComponent />
       </div>
     </div>
   );
